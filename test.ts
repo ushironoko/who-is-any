@@ -1,16 +1,16 @@
-export function pulsOne(num: any) {
+function pulsOne(num: any) {
   num++
 }
 
-export function double(num) {
+function double(num) {
   num * 2
 }
 
-export function expo(num: number) {
+function expo(num: number) {
   num ** num
 }
 
-export class A {
+class A {
   greet(msg) {
     console.log('hello' + msg)
   }

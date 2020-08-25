@@ -38,10 +38,15 @@ function collectAnyType(
   const checker = program.getTypeChecker()
   const source = program.getSourceFile('test.ts')
   if (!source) return
+  const result: unknown[] = []
   ts.forEachChild(source, (node) => {
     const type = checker.getTypeAtLocation(node)
-    console.log(checker.typeToString(type))
+    const matcher = /any/
+    if (checker.typeToString(type).match(matcher)) {
+      result.push(node.getFullText())
+    }
   })
+  console.log(result)
 }
 
 function main() {
