@@ -9,3 +9,9 @@ export function double(num) {
 export function expo(num: number) {
   num ** num
 }
+
+export class A {
+  greet(msg) {
+    console.log('hello' + msg)
+  }
+}
