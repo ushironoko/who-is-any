@@ -26,26 +26,28 @@ function getCompilerOptions(rootDir: string, configName = 'tsconfig.json') {
   return compilerOptions
 }
 
-function getTargetSource(program: ts.Program) {
-  const result = program.getSourceFiles()
-  return result
-}
-
 function collectAnyType(
   rootNames: Readonly<string>[],
   options: ts.CompilerOptions,
 ) {
   const program = ts.createProgram({
-    options,
     rootNames,
+    options,
   })
-  console.log(getTargetSource(program))
+
+  const checker = program.getTypeChecker()
+  const source = program.getSourceFile('test.ts')
+  if (!source) return
+  ts.forEachChild(source, (node) => {
+    const type = checker.getTypeAtLocation(node)
+    console.log(checker.typeToString(type))
+  })
 }
 
 function main() {
   const conf = getCompilerOptions('../')
   if (!conf) return
-  collectAnyType(['../example/code.ts'], conf.options)
+  collectAnyType(['test.ts'], conf.options)
 }
 
 main()
